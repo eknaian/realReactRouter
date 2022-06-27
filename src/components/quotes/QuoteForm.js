@@ -6,9 +6,10 @@ import LoadingSpinner from "../UI/LoadingSpinner";
 import classes from "./QuoteForm.module.css";
 
 const QuoteForm = (props) => {
+  const [isEntering, setIsEntering] = useState(false);
+
   const authorInputRef = useRef();
   const textInputRef = useRef();
-  const [isEntering, setIsEntering] = useState(false);
 
   function submitFormHandler(event) {
     event.preventDefault();
@@ -21,13 +22,12 @@ const QuoteForm = (props) => {
     props.onAddQuote({ author: enteredAuthor, text: enteredText });
   }
 
-  const formFocusHandler = () => {
-    console.log("Focus");
-    setIsEntering(true);
-  };
-
   const finishEnteringHandler = () => {
     setIsEntering(false);
+  };
+
+  const formFocusedHandler = () => {
+    setIsEntering(true);
   };
 
   return (
@@ -35,12 +35,12 @@ const QuoteForm = (props) => {
       <Prompt
         when={isEntering}
         message={(location) =>
-          "Are you sure you want to leave this page? All your entered data will be lost!"
+          "Are you sure you want to leave? All your entered data will be lost!"
         }
       />
       <Card>
         <form
-          onFocus={formFocusHandler}
+          onFocus={formFocusedHandler}
           className={classes.form}
           onSubmit={submitFormHandler}
         >
